@@ -1,0 +1,19 @@
+SELECT
+ date(a.impression_time) as date,
+ c.NAME AS partner,
+ (CASE WHEN b.ctv='t' THEN 'ctv' WHEN a.mobile='t' THEN 'mobile' WHEN b.desktop=1 THEN 'desktop' END) AS platform,
+ count( DISTINCT network_user_id )
+FROM
+ styx_production.impressions a,
+ facelift.placements b,
+ facelift.partners c 
+WHERE
+ a.impression_time >= '2020-01-01'
+ AND a.date>= '2020-01-01' 
+ AND is_impression = 't' 
+ AND a.placement_hash = b.identifier_hash 
+ AND b.partner_id = c.id 
+GROUP BY
+ 1,2,3
+ORDER BY 
+ 1,2,3;
