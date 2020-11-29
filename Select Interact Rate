@@ -1,0 +1,11 @@
+SELECT
+ date,
+ partner_name,
+ sum( true_choice_select_interacts ),
+ sum( true_choice_select_watches ),
+FROM
+ styx_production.whiplashes 
+WHERE
+ date >= '2020-01-01' 
+GROUP BY
+1,2;
